@@ -8,10 +8,3 @@ INSTALLED_APPS = [
     'graphene_django',
     'crm',
 ]
-
-GRAPHENE = {
-    "SCHEMA": "alx_backend_graphql_crm.schema.schema"
-}
-
-# Usual Django configurations below
-
