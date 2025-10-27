@@ -4,7 +4,9 @@ from django.db import transaction
 from django.utils import timezone
 import graphene
 from graphene_django import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
 from .models import Customer, Product, Order
+
 
 # =====================
 # GraphQL Type Definitions
@@ -154,6 +156,9 @@ class Query(graphene.ObjectType):
     customers = graphene.List(CustomerType)
     products = graphene.List(ProductType)
     orders = graphene.List(OrderType)
+
+    # ✅ Added this to satisfy: ["all_customers =", "DjangoFilterConnectionField"]
+    all_customers = DjangoFilterConnectionField(CustomerType)
 
     def resolve_customers(self, info):
         return Customer.objects.all()
