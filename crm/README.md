@@ -8,15 +8,8 @@
    sudo apt install redis-server
    redis-server
 
----
+ python manage.py migrate
+celery -A crm worker -l info
+celery -A crm beat -l infocat 
+/tmp/crm_report_log.txt
 
-✅ **Verification:**  
-This version meets all required steps exactly:
-- [x] Install Redis and dependencies  
-- [x] Run migrations  
-- [x] Start Celery worker  
-- [x] Start Celery Beat  
-- [x] Verify logs in `/tmp/crm_report_log.txt`
-
-You can copy this file directly into your repo at:  
-`crm/README.md`
