@@ -1,0 +1,4 @@
+Django
+graphene-django
+gql
+django-crontab
