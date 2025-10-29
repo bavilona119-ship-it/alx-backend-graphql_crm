@@ -2,3 +2,7 @@ Django
 graphene-django
 gql
 django-crontab
+celery
+django-celery-beat
+redis
+
