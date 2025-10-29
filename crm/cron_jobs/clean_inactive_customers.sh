@@ -16,4 +16,4 @@ print(count)
 ")
 
 timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-echo \"[$timestamp] Deleted $deleted_count inactive customers\" >> /tmp/customer_cleanup_log.txt
+echo "[$timestamp] Deleted $deleted_count inactive customers" >> /tmp/customer_cleanup_log.txt
