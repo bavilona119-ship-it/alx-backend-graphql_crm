@@ -1,43 +1,41 @@
-# =====================
-# New Mutation for Low Stock Products
-# =====================
+import graphene
+from graphene_django import DjangoObjectType
+from crm.models import Product
 
+# Define Product type
+class ProductType(DjangoObjectType):
+    class Meta:
+        model = Product
+        fields = ("id", "name", "stock")
+
+# Define Mutation for low-stock update
 class UpdateLowStockProducts(graphene.Mutation):
-    """Mutation to automatically restock products with low stock (<10)."""
-
-    updated_products = graphene.List(ProductType)
+    success = graphene.Boolean()
     message = graphene.String()
+    updated_products = graphene.List(ProductType)
 
-    def mutate(self, info):
+    @classmethod
+    def mutate(cls, root, info):
         low_stock_products = Product.objects.filter(stock__lt=10)
         updated_products = []
 
         for product in low_stock_products:
-            product.stock += 10  # Simulate restocking
+            product.stock += 10  # simulate restocking
             product.save()
             updated_products.append(product)
 
-        if not updated_products:
-            return UpdateLowStockProducts(
-                updated_products=[],
-                message="No products needed restocking."
-            )
+        message = f"{len(updated_products)} products updated successfully."
+        return UpdateLowStockProducts(success=True, message=message, updated_products=updated_products)
 
-        return UpdateLowStockProducts(
-            updated_products=updated_products,
-            message=f"{len(updated_products)} products restocked successfully."
-        )
-
-
-# =====================
-# Root Mutation (add new mutation here)
-# =====================
-
+# Root mutation class
 class Mutation(graphene.ObjectType):
-    create_customer = CreateCustomer.Field()
-    bulk_create_customers = BulkCreateCustomers.Field()
-    create_product = CreateProduct.Field()
-    create_order = CreateOrder.Field()
-
-    # ✅ New mutation
     update_low_stock_products = UpdateLowStockProducts.Field()
+
+# Root query (you can extend this as needed)
+class Query(graphene.ObjectType):
+    products = graphene.List(ProductType)
+
+    def resolve_products(root, info):
+        return Product.objects.all()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
