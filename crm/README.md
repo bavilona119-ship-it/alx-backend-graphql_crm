@@ -1,11 +1,14 @@
 # CRM Celery + Beat Setup Guide
 
 ## 🧩 Requirements
-- Redis installed and running on default port (`6379`)
-- Python dependencies installed via `requirements.txt`
+- Redis must be installed and running on your system.
+- All Python dependencies must be installed using `requirements.txt`.
 
-## ⚙️ Setup Instructions
+---
 
-1. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
+## ⚙️ Setup Steps
+
+### 1. Install Dependencies
+Install all required packages:
+```bash
+pip install -r requirements.txt
