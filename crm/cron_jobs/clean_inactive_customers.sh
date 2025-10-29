@@ -1,14 +1,8 @@
 #!/bin/bash
-# Script: clean_inactive_customers.sh
-# Description: Deletes customers with no orders since a year ago and logs the result.
+# Deletes customers with no orders in the past year and logs the action.
 
-# Move to project root (update path if needed)
 cd "$(dirname "$0")/../.." || exit
 
-# Activate virtual environment if applicable
-# source venv/bin/activate
-
-# Run Django shell command to delete inactive customers
 deleted_count=$(python manage.py shell -c "
 from datetime import timedelta
 from django.utils import timezone
@@ -21,6 +15,5 @@ inactive_customers.delete()
 print(count)
 ")
 
-# Log the result with timestamp
 timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 echo \"[$timestamp] Deleted $deleted_count inactive customers\" >> /tmp/customer_cleanup_log.txt
